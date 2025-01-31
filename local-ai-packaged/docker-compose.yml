@@ -30,6 +30,14 @@ x-ollama: &service-ollama
   networks: ['demo']
   environment:
     - OLLAMA_PATH=${OLLAMA_PATH}
+  deploy:
+        resources:
+          limits:
+            cpus: '4'           # Limit to 4 CPU
+            memory: 12G          # Hard limit of 12GB memory
+          reservations:
+            cpus: '1'          # Soft limit of 1 CPU
+            memory: 4GB          # Soft limit of 4GB memory
   restart: unless-stopped
   ports:
     - 11434:11434
@@ -38,10 +46,18 @@ x-ollama: &service-ollama
 
 x-init-ollama: &init-ollama
   image: ollama/ollama:latest
+  container_name: ollama-pull-llama
   networks: ['demo']
   environment:
     - OLLAMA_PATH=${OLLAMA_PATH}
-  container_name: ollama-pull-llama
+  deploy:
+    resources:
+      limits:
+        cpus: '4'           # Limit to 4 CPU
+        memory: 12G          # Hard limit of 12GB memory
+      reservations:
+        cpus: '1'          # Soft limit of 1 CPU
+        memory: 4GB          # Soft limit of 4GB memory
   volumes:
     - ${OLLAMA_PATH}:/root/.ollama
   entrypoint: /bin/sh
