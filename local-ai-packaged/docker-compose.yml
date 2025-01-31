@@ -1,7 +1,6 @@
 volumes:
   n8n_storage:
   postgres_storage:
-  ollama_storage:
   qdrant_storage:
   open-webui:
   flowise:
@@ -29,18 +28,22 @@ x-ollama: &service-ollama
   image: ollama/ollama:latest
   container_name: ollama
   networks: ['demo']
+  environment:
+    - OLLAMA_PATH=${OLLAMA_PATH}
   restart: unless-stopped
   ports:
     - 11434:11434
   volumes:
-    - ollama_storage:/root/.ollama
+    - ${OLLAMA_PATH}:/root/.ollama
 
 x-init-ollama: &init-ollama
   image: ollama/ollama:latest
   networks: ['demo']
+  environment:
+    - OLLAMA_PATH=${OLLAMA_PATH}
   container_name: ollama-pull-llama
   volumes:
-    - ollama_storage:/root/.ollama
+    - ${OLLAMA_PATH}:/root/.ollama
   entrypoint: /bin/sh
   command:
     - "-c"
