@@ -40,10 +40,10 @@ x-ollama: &service-ollama
   deploy:
     resources:
       limits:
-        cpus: '12'           # Limit to 12 CPU
-        memory: 12G          # Hard limit of 12GB memory
+        cpus: '6'           # Limit to 6 CPU
+        memory: 10G          # Hard limit of 10GB memory
       reservations:
-        cpus: '4'          # Soft limit of 1 CPU
+        cpus: '1'          # Soft limit of 1 CPU
         memory: 2GB          # Soft limit of 2GB memory
   restart: unless-stopped
   ports:
