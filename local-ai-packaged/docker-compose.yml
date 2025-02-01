@@ -53,7 +53,7 @@ x-init-ollama: &init-ollama
   deploy:
     resources:
       limits:
-        cpus: '4'           # Limit to 4 CPU
+        cpus: '10'           # Limit to 4 CPU
         memory: 12G          # Hard limit of 12GB memory
       reservations:
         cpus: '1'          # Soft limit of 1 CPU
