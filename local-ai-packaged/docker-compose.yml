@@ -11,16 +11,22 @@ networks:
 x-n8n: &service-n8n
   image: n8nio/n8n:latest
   networks: ['demo']
+  env_file:
+    - .env
   environment:
-    - DB_TYPE=postgresdb
-    - DB_POSTGRESDB_HOST=postgres
-#    - DB_POSTGRESDB_DATABASE=${POSTGRES_DATABASE}
-    - DB_POSTGRESDB_USER=${POSTGRES_USER}
-    - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
-    - N8N_DIAGNOSTICS_ENABLED=false
-    - N8N_PERSONALIZATION_ENABLED=false
-    - N8N_ENCRYPTION_KEY
-    - N8N_USER_MANAGEMENT_JWT_SECRET
+    DB_TYPE: postgresdb
+    DB_POSTGRESDB_PORT: 5432
+    DB_POSTGRESDB_HOST: postgres
+    DB_POSTGRESDB_DATABASE: ${POSTGRES_DATABASE}
+    DB_POSTGRESDB_USER: ${POSTGRES_USER}
+    DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+    N8N_BASIC_AUTH_ACTIVE: ${N8N_BASIC_AUTH_ACTIVE}
+    N8N_BASIC_AUTH_USER: ${N8N_BASIC_AUTH_USER}
+    N8N_BASIC_AUTH_PASSWORD: ${N8N_BASIC_AUTH_PASSWORD}
+    N8N_DIAGNOSTICS_ENABLED: false
+    N8N_PERSONALIZATION_ENABLED: false
+    N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+    N8N_USER_MANAGEMENT_JWT_SECRET: ${N8N_USER_MANAGEMENT_JWT_SECRET}
   links:
     - postgres
 
@@ -28,16 +34,18 @@ x-ollama: &service-ollama
   image: ollama/ollama:latest
   container_name: ollama
   networks: ['demo']
+  env_file:
+    - .env
   environment:
     - OLLAMA_PATH=${OLLAMA_PATH}
   deploy:
         resources:
           limits:
-            cpus: '4'           # Limit to 4 CPU
+            cpus: '12'           # Limit to 12 CPU
             memory: 12G          # Hard limit of 12GB memory
           reservations:
-            cpus: '1'          # Soft limit of 1 CPU
-            memory: 4GB          # Soft limit of 4GB memory
+            cpus: '4'          # Soft limit of 1 CPU
+            memory: 2GB          # Soft limit of 2GB memory
   restart: unless-stopped
   ports:
     - 11434:11434
@@ -48,16 +56,18 @@ x-init-ollama: &init-ollama
   image: ollama/ollama:latest
   container_name: ollama-pull-llama
   networks: ['demo']
+  env_file:
+    - .env
   environment:
     - OLLAMA_PATH=${OLLAMA_PATH}
   deploy:
     resources:
       limits:
-        cpus: '10'           # Limit to 4 CPU
+        cpus: '12'           # Limit to 12 CPU
         memory: 12G          # Hard limit of 12GB memory
       reservations:
         cpus: '1'          # Soft limit of 1 CPU
-        memory: 4GB          # Soft limit of 4GB memory
+        memory: 2GB          # Soft limit of 2GB memory
   volumes:
     - ${OLLAMA_PATH}:/root/.ollama
   entrypoint: /bin/sh
@@ -100,10 +110,12 @@ services:
     restart: unless-stopped
     ports:
       - 5432:5432
+    env_file:
+      - .env
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
- #     - POSTGRES_DB=${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
     volumes:
       - postgres_storage:/var/lib/postgresql/data
     healthcheck:
