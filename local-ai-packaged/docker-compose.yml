@@ -73,7 +73,7 @@ x-init-ollama: &init-ollama
     - "-c"
 #   - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull llama3.1; OLLAMA_HOST=ollama:11434 ollama pull nomic-embed-text"
 # this is to pull the models from the ollama server
-    - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull ontocord/vinallama;OLLAMA_HOST=ollama:11434 ollama pull llama3.1;OLLAMA_HOST=ollama:11434 ollama pull nomic-embed-text"
+    - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull ontocord/vinallama; OLLAMA_HOST=ollama:11434 ollama pull llama3.1; OLLAMA_HOST=ollama:11434 ollama pull nomic-embed-text"
 services:
   flowise:
     image: flowiseai/flowise
