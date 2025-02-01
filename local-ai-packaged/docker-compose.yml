@@ -39,13 +39,13 @@ x-ollama: &service-ollama
   environment:
     - OLLAMA_PATH=${OLLAMA_PATH}
   deploy:
-        resources:
-          limits:
-            cpus: '12'           # Limit to 12 CPU
-            memory: 12G          # Hard limit of 12GB memory
-          reservations:
-            cpus: '4'          # Soft limit of 1 CPU
-            memory: 2GB          # Soft limit of 2GB memory
+    resources:
+      limits:
+        cpus: '12'           # Limit to 12 CPU
+        memory: 12G          # Hard limit of 12GB memory
+      reservations:
+        cpus: '4'          # Soft limit of 1 CPU
+        memory: 2GB          # Soft limit of 2GB memory
   restart: unless-stopped
   ports:
     - 11434:11434
@@ -108,6 +108,7 @@ services:
     image: postgres:16-alpine
     networks: ['demo']
     restart: unless-stopped
+    container_name: postgres
     ports:
       - 5432:5432
     env_file:
