@@ -27,6 +27,7 @@ x-n8n: &service-n8n
     - N8N_PERSONALIZATION_ENABLED
     - N8N_ENCRYPTION_KEY
     - N8N_USER_MANAGEMENT_JWT_SECRET
+    - KB_PATH
     - TZ=Asia/Ho_Chi_Minh
   links:
     - postgres
@@ -157,6 +158,7 @@ services:
       - 5678:5678
     volumes:
       - n8n_storage:/home/node/.n8n
+      - ${KB_PATH}:/home/node/ifiles
       - ./n8n/backup:/backup
       - ./shared:/data/shared
     depends_on:
