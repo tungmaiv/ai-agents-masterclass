@@ -1,0 +1,4 @@
+# copy this file to Ollama container 
+# in ollama run: ollama create -f ollama-qwen2.5-coder-ext:7b 
+FROM qwen2.5-coder:7b
+PARAMETER num_ctx 32768
