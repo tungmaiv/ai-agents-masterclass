@@ -62,7 +62,7 @@ $$;
 -- Everything above will work for any PostgreSQL database. The below commands are for Supabase security
 
 -- Enable RLS on the table
-alter table site_pages enable row level security;
+alter table document_chunks enable row level security;
 
 -- Create a policy that allows anyone to read
 create policy "Allow public read access documents"
