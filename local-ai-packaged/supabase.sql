@@ -3,7 +3,7 @@ create extension if not exists vector;
 
 -- Create the documentation chunks table
 create table document_chunks (
-    id bigserial primary key,
+    id bigserial not null,
     file_name varchar not null,
     chunk_number integer not null,
     title varchar null,
