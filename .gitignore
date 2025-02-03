@@ -169,3 +169,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# project data folders
+local-ai-packaged/ifiles/
+local-ai-packaged/n8n/file-storage
+ifiles/
+n8n/file-storage
